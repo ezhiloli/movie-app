@@ -1,8 +1,18 @@
 import React  from "react";
+import { addToFavourites } from "../actions";
 
 class MovieCard extends React.Component{
+    handleFavouriteClick =() =>{
+        const { movie } = this.props;
+
+        // we don't have get from app.js
+        this.props.dispatch(addToFavourites(movie))
+    }  
+    handleUnFavouriteClick = () =>{
+
+    }
     render(){
-        const {movie} = this.props;
+        const {movie,isFavourite} = this.props;
         // To check weather the moviecard component has been working or not
         // console.log('Movie ins MovieCard Component=>',movie);
         return(
@@ -17,7 +27,13 @@ class MovieCard extends React.Component{
                     <div className="plot">{movie.Plot}</div>
                     <div className="footer">
                         <div className="rating">{movie.imdbRating}</div>
-                        <button>Favourite</button>
+                        {
+                            isFavourite
+                            ? <button className="unfavourite-btn" onClick={this.handleUnFavouriteClick}>UnFavourite</button>
+                            : <button className="favourite-btn" onClick={this.handleFavouriteClick}>Favourite</button>
+                        }
+
+                        
                     </div>
                 </div>
             </div>
