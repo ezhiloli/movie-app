@@ -4,7 +4,31 @@ import MovieCard from './MovieCard';
 import { data } from '../data'
 
 
-function App(){
+class App extends React.Component{
+
+  // To get the movies we make API Calls now we are fetch from data.js file
+  // dispatch action
+  componentDidMount(){
+
+    const {store} = this.props;
+
+    // when ever we dispatch action the subscription will be called
+    store.subscribe(()=>{
+      console.log('Updated');
+      this.forceUpdate();
+    })
+ 
+    store.dispatch({
+      type:'ADD_MOVIES',
+      movies:data
+    });
+
+    console.log('After making Local API Call from componentDidMount',this.props.store.getState());
+
+  }
+ 
+  render(){
+    const movies = this.props.store.getState();
     return(
       <div className="App">
         <Navbar />
@@ -15,7 +39,7 @@ function App(){
 
           </div>
           <div id="list">
-                {data.map((movie,index)=>(
+                {movies.map((movie,index)=>(
                       <MovieCard 
                       movie={movie}
                       key={`movie-${index}`}
@@ -26,7 +50,7 @@ function App(){
         </div>
       </div>
     )
-  
+  }
 }
 
 

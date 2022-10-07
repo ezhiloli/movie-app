@@ -9,10 +9,15 @@ import movies from './reducers'
 const store = createStore(movies);
 // Store Movie
 console.log('Redux Store',store);
-console.log('Redux State',store.getState());
+// console.log('Redux State',store.getState());
 
 
+// store.dispatch({
+//     type:'ADD_MOVIES',
+//     movies:[{name:'Superman'}]
+// })
  
+// console.log('After State',store.getState());
 
-ReactDOM.render(<App />,document.getElementById('root'));
+ReactDOM.render(<App store={store}/>,document.getElementById('root'));
 
