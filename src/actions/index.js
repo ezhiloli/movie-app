@@ -16,13 +16,13 @@ export const SET_SHOW_FAVOURITES = 'SET_SHOW_FAVOURITES';
 export function addMovies(movies){
     return{
         type:ADD_MOVIES,
-        movies:data
+        movies
     }
 }
 export function addToFavourites(movie){
     return{
         type:ADD_TO_FAVOURITE,
-        movie
+        movie,
     }
 }
 
@@ -38,3 +38,15 @@ export function setShowFavourites(value){
         value
     }
 }
+export function handleMovieSearch(movie) {
+    console.log('In handleMovieSearch Function',movie);
+    const url = `https://www.omdbapi.com/?i=tt3896198&apikey=205c172a&s=${movie}`;
+   
+      fetch(url)
+        .then(response => response.json())
+        .then(movie => {
+          console.log("movie", movie);
+        })
+        
+    }
+  
