@@ -3,9 +3,9 @@ import Navbar from './Navbar';
 import MovieCard from './MovieCard';
 import { data } from '../data'
 import {addMovies, setShowFavourites} from '../actions'
-import {connect} from '../index'
+// import {connect} from '../index'
 // import { search } from '../reducers';
-
+import {connect} from 'react-redux';
 
 class App extends React.Component{
 
