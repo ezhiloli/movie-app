@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
@@ -39,12 +39,30 @@ console.log('Redux Store',store);
 // console.log('Redux State',store.getState());
 
 
+export const StoreContext = createContext();
+
+console.log('StoreContext',StoreContext);
+
+
 // store.dispatch({
 //     type:'ADD_MOVIES',
 //     movies:[{name:'Superman'}]
 // })
  
 // console.log('After State',store.getState());
-
-ReactDOM.render(<App store={store}/>,document.getElementById('root'));
+class Provider extends React.Component{
+    render(){
+        const {store} = this.props
+        return <StoreContext.Provider value={store}>
+          {this.props.children}  
+</StoreContext.Provider>
+    }
+}
+ReactDOM.render(
+    <Provider store={store}>
+        <App store={store} />
+        {/* Within the Provider tag all the elements will be childeren */}
+    </Provider>,
+    document.getElementById('root')
+);
 
