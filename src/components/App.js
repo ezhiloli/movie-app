@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import MovieCard from './MovieCard';
 import { data } from '../data'
 import {addMovies, setShowFavourites} from '../actions'
-import {StoreContext} from '../index'
+import {connect} from '../index'
 // import { search } from '../reducers';
 
 
@@ -13,27 +13,23 @@ class App extends React.Component{
   // dispatch action
   componentDidMount(){
 
-    const {store} = this.props;
+    // const {store} = this.props;
 
     // when ever we dispatch action the subscription will be called
-    store.subscribe(()=>{
-      console.log('Updated');
-      this.forceUpdate();
-    })
- 
+   
     // store.dispatch({
     //   type:'ADD_MOVIES',
     //   movies:data
     // }); Alternate method -> Call some function(data) if the function return this lines
 
-    store.dispatch(addMovies(data));
+    this.props.dispatch(addMovies(data));
 
-    console.log('After making Local API Call from componentDidMount',this.props.store.getState());
+    // console.log('After making Local API Call from componentDidMount',this.props.store.getState());
 
   }
 
   isMovieFavourite = (movie)  =>{
-    const {movies} = this.props.store.getState();
+    const {movies} = this.props;
 
     const index = movies.favourites.indexOf(movie);
 
@@ -44,13 +40,13 @@ class App extends React.Component{
 
   }
   onChangeTab = (value) =>{
-    this.props.store.dispatch(setShowFavourites(value))
+    this.props.dispatch(setShowFavourites(value))
   }
  
   render(){
-    const {movies,search} = this.props.store.getState();
+    const {movies,search} = this.props;
     const {list,favourites,showFavourites} = movies;
-    console.log('RENDER STATE',this.props.store.getState());
+    // console.log('RENDER STATE',this.props.store.getState());
     const displayMovies = showFavourites ? favourites :list;
 
 
@@ -68,7 +64,7 @@ class App extends React.Component{
                       <MovieCard 
                       movie={movie}
                       key={`movie-${index}`}
-                      dispatch={this.props.store.dispatch}
+                      dispatch={this.props.dispatch}
                       isFavourite={this.isMovieFavourite(movie)}
                       />
                 ))}    
@@ -80,15 +76,24 @@ class App extends React.Component{
   }
 }
 
-class AppWrapper extends React.Component{
-  render(){
-    return(
-      <StoreContext.Consumer>
-        {(store) => <App store={store}/>}
-      </StoreContext.Consumer>
-    )
+// class AppWrapper extends React.Component{
+//   render(){
+//     return(
+//       <StoreContext.Consumer>
+//         {(store) => <App store={store}/>}
+//       </StoreContext.Consumer>
+//     )
+//   }
+// }
+
+function mapStateToProps(state){
+  return{
+    movies:state.movies,
+    search:state.movies,
   }
 }
 
-export default AppWrapper;
+const connectedAppComponent = connect(mapStateToProps)(App);
+
+export default connectedAppComponent;
 
