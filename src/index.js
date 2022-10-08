@@ -60,7 +60,7 @@ class Provider extends React.Component{
 }
 ReactDOM.render(
     <Provider store={store}>
-        <App store={store} />
+        <App  />
         {/* Within the Provider tag all the elements will be childeren */}
     </Provider>,
     document.getElementById('root')
